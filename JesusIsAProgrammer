@@ -1,0 +1,20 @@
+if not A_IsAdmin
+{
+   Run *RunAs "%A_ScriptFullPath%"  ; Requires v1.0.92.01+
+   ExitApp
+}
+Joy5::
+KeyWait, Joy5, T0.3 
+if ErrorLevel ; key was held 0.3+ second
+{
+  While GetKeyState("Joy5") ; While key is being held
+  {
+    Send, #{NumpadSub} ; Repeatedly zoom out
+    Sleep, 10
+  }
+WinClose Magnifier   ; And close the magnifier when you let go
+Return
+}
+else ; key was held for less than 0.3 second
+  send #{NumpadAdd}  ; Zoom in
+return
